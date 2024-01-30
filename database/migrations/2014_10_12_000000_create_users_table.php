@@ -30,4 +30,10 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
     }
+
+
+    public function addresses()
+{
+    return $this->hasMany(Address::class);
+}
 };

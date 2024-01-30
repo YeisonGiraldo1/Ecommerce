@@ -1,6 +1,6 @@
 
 <x-app-layout>
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -12,7 +12,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbs5uP9Du7UUGjQ1SZzQ3PJZG2KfOnQjk/Pn5c9eb4lAI5F6Hq7fmjsl5F9Gq1dz" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-hMA4qf7MTZZqlv8YM0N8X4sHZvG9+NO6N4TDxvEqGB0gDhUxO89Gg1+w4QfnWbLg2BW+fP4f/qA7Yx2RG3zg/g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Styles -->
         <style>
         .work-sans {
@@ -187,26 +187,44 @@ Alternatively if you want to just have a single hero
                     </div>
               </div>
             </nav>
-
-
+          
+            
             @foreach ($products as $product)
-            <div  class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
-            <a href="{{ route('detailproduct', ['id' => $product->id]) }}">
-
-                <img class="hover:grow hover:shadow-lg" style="max-width: 100%; height: auto;" src="{{ asset('images_products/' . $product->image) }}">
-
-                    <div class="pt-3 flex items-center justify-between">
-                        <p class="">{{$product->name}}</p>
-                        <svg class="h-6 w-6 fill-current text-gray-500 hover:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z" />
-                        </svg>
-                    </div>
-                    <p class="pt-1 text-gray-900">{{$product->price}}</p>
-                </a>
-               
-
+    <div class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
+        <a href="{{ route('detailproduct', ['id' => $product->id]) }}">
+            <div class="relative">
+                <img class="hover:grow hover:shadow-lg object-cover object-center rounded-md" style="max-height: 250px;" src="{{ asset('images_products/' . $product->image) }}" alt="{{ $product->name }}">
+                <div class="absolute top-0 left-0 p-2">
+                    <span class="bg-blue-500 text-white py-1 px-2 rounded-md">{{ $product->category->name }}</span>
+                </div>
             </div>
-            @endforeach
+
+            <div class="pt-3 flex items-center justify-between">
+                <p class="font-bold text-lg">{{ $product->name }}</p>
+                <svg class="h-6 w-6 fill-current text-gray-500 hover:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z" />
+                </svg>
+            </div>
+            <p class="pt-1 text-gray-900">${{ $product->price }}</p>
+        </a>
+
+        @if(auth()->check())
+    <form method="POST" action="{{ route('cart.add', ['id' => $product->id, 'user_id' => auth()->user()->id]) }}">
+        @csrf
+        <div class="flex items-center justify-between pt-4">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                <i class="fas fa-cart-plus mr-2"></i> Añadir al Carrito
+            </button>
+        </div>
+    </form>
+@endif
+
+    </div>
+@endforeach
+
+
+
+
     </section>
 
     <section class="bg-white py-8">
