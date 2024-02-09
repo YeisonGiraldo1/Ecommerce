@@ -1,11 +1,12 @@
 <section class="space-y-6">
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Delete Account') }}
+        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 label-black">
+            {{ __('Eliminar Cuenta') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 label-black">
+            {{ __('
+            Una vez que se elimine su cuenta, todos sus recursos y datos se eliminarán permanentemente. Antes de eliminar su cuenta, descargue cualquier dato o información que desee conservar.') }}
         </p>
     </header>
 
@@ -47,9 +48,29 @@
                 </x-secondary-button>
 
                 <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
+                    {{ __('Eliminar Cuenta') }}
                 </x-danger-button>
             </div>
         </form>
     </x-modal>
 </section>
+
+
+
+<style>
+    /* Agrega estas clases en tu archivo de estilos CSS o en tu etiqueta <style> en el documento */
+.label-black {
+    color: black; /* Color del label */
+}
+
+.input-gray-light {
+    background-color: #f2f2f2; /* Color de fondo del input (gris claro) */
+    color: black; /* Color del texto del input */
+}
+
+/* Opcional: Estilo para el mensaje de error */
+.error-message {
+    color: red;
+}
+
+</style>

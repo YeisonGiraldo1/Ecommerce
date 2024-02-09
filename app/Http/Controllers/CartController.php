@@ -81,7 +81,7 @@ public function index()
         return $item->price * $item->quantity;
     });
 
-    view()->share('totalproducts', $data['totalproducts']);
+    // view()->share('totalproducts', $data['totalproducts']);
     return view('cart.index', $data);
 }
 

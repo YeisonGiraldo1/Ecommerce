@@ -7,6 +7,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ContactController;
+
+use App\Livewire\AddressForm;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +41,7 @@ require __DIR__.'/auth.php';
 
 
     
+
     Route::get('/', function () {
         if (auth()->check()) {
            //USER IS AUTENTICATED,VERIFI ROLE
@@ -66,19 +70,19 @@ require __DIR__.'/auth.php';
     
 Route::middleware('auth')->group(function () {
 
-//CRUD CATEGORIES
+
 
 Route::resource('categories', CategoryController::class);//GLOBAL ROUTE FOR CATEGORIES(CRUD)
 
 
-//CRUD PRODUCTS
+
 Route::resource('products', ProductController::class);//GLOBAL ROUTE FOR PRODUCTS(CRUD)
 
 });
 
 
-//ROUTE DETAIL PRODUCT
-Route::get('/detail/product{id}', [ProductController::class, 'detail'])->name('detailproduct');
+
+Route::get('/detail/product{id}', [ProductController::class, 'detail'])->name('detailproduct');//ROUTE DETAIL PRODUCT
 
 
 //SHOPING CART
@@ -97,7 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::group(['middleware' => 'auth'], function () {
     
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');//ROUTE VIEW CHECKOUT
 
 });
 
@@ -105,3 +109,9 @@ Route::middleware('auth')->group(function () {
     //CRUD ADRESSES
 Route::resource('addresses', AddressController::class);
 });
+
+
+
+Route::get('/contact', [ContactController::class, 'showform'])->name('contact');
+Route::post('/contact/submit', [ContactController::class, 'submitform'])->name('contact.submit');
+Route::get('/contact/success', [ContactController::class, 'successview'])->name('contact.success');

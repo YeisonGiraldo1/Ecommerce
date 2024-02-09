@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Address;
 
 class CheckoutController extends Controller
 {
@@ -17,6 +19,21 @@ class CheckoutController extends Controller
             'name',
             'email'
         ])->where('id' ,$userId)->get();
+
+
+
+
+
+
+
+        // GET USER ADDRESS
+
+        $data['address'] = Address::select([
+            'department',
+            'city',
+            'neighborhood'
+        ])->where('user_id' ,$userId)->get();
+
 
         $data['items'] = Cart::select([
             'carts.id',
@@ -41,5 +58,10 @@ class CheckoutController extends Controller
 
 
         return view('checkout.index',$data);
+    
     }
+
+
+
+  
 }

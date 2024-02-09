@@ -7,25 +7,33 @@
 
             <form action="{{ route('addresses.store') }}" method="post">
                 @csrf
-
+                <form wire:submit.prevent="submitForm">
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-600">Nombre Completo</label>
                     <input type="text" name="name" id="name" class="mt-1 p-2 w-2/3 border rounded-md">
                 </div>
 
+               
+                
                 <div class="mb-4 flex space-x-4">
-                    <!-- Departamento -->
                     <div class="flex-1">
                         <label for="department" class="block text-sm font-medium text-gray-600">Departamento</label>
-                        <input type="text" name="department" id="department" class="mt-1 p-2 w-full border rounded-md">
+                        <select wire:model="billing_town_city" name="department" id="department" class="mt-1 p-2 w-full border rounded-md">
+                            @foreach ($states as $state)
+                                <option value="{{ $state['state_name'] }}">{{ $state['state_name'] }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 
-                    <!-- Ciudad -->
                     <div class="flex-1">
                         <label for="city" class="block text-sm font-medium text-gray-600">Municipio/Ciudad</label>
-                        <input type="text" name="city" id="city" class="mt-1 p-2 w-full border rounded-md">
+                    
+                            <input type="text" name="city" id="city" class="mt-1 p-2 w-full border rounded-md">
+                       
                     </div>
                 </div>
+                
+
                 
 
                
@@ -86,3 +94,5 @@
         </div>
     </div>
 </x-app-layout>
+
+

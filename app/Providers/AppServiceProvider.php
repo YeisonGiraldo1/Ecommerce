@@ -22,5 +22,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share('products', Product::all());
+
+
+        
+        // $totalproducts = session('totalproducts', ); // Obtén la variable desde la sesión
+        // View::share('totalproducts', $totalproducts);
     }
 }
