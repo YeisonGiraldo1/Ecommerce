@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('brand');
             $table->string('status');
             $table->string('color');
-            $table->integer('discount');
+            $table->integer('discount')->default(0);
             $table->string('stock');
             $table->string('image');
             $table->unsignedBigInteger("category_id")->nullable();

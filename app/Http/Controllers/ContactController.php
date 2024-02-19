@@ -44,6 +44,19 @@ public function successview(){
 }
 
 
+public function index()
+{
+    $messages = Contact::latest()->get();
+    return view('contact.index', compact('messages'));
+}
+
+
+
+public function show(string $id){
+    $messagedetail = Contact::findOrFail($id);
+    return view ('contact.show' ,['messagedetail' => $messagedetail]);
+
+}
 }
 
 

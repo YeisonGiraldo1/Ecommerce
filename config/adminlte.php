@@ -331,32 +331,63 @@ return [
         // ],
         [
             'text'    => 'Productos',
-            'icon'    => 'fas fa-fw fa-cart-shopping',
+            'icon'    => 'fas fa-fw fa-box',
             'submenu' => [
                 [
                     'text' => 'Crear Producto',
                     'url'  => '/products/create',
+                    'icon' => 'fas fa-fw fa-plus', // Ícono de "Añadir"
                 ],
                 [
                     'text' => 'Lista Productos',
                     'url'  => '/products',
+                    'icon' => 'fas fa-fw fa-list', // Ícono de "Listar"
                 ],
             ],
         ],
         [
         'text'    => 'Categorias',
-        'icon'    => 'fas fa-fw fa-share',
+        'icon'    => 'fas fa-fw fa-tag',
         'submenu' => [
             [
                 'text' => 'Crear Categoria',
                 'url'  => '/categories/create',
+                'icon' => 'fas fa-fw fa-plus', // Ícono de "Añadir"
             ],
             [
                 'text' => 'Lista Categorias',
                 'url'  => '/categories',
+                'icon' => 'fas fa-fw fa-list', // Ícono de "Listar"
             ],
         ],
     ],
+
+    [
+    'text'    => 'Mensajes',
+    'icon'    => 'fas fa-fw fa-envelope',
+    'submenu' => [
+
+        [
+            'text' => 'Lista Mensajes',
+            'url'  => '/messages',
+            'icon' => 'fas fa-fw fa-list', // Ícono de "Listar"
+        ],
+    ],
+],
+
+[
+    'text'    => 'Pedidos',
+    'icon'    => 'fas fa-fw fa-shopping-cart',
+    'submenu' => [
+
+        [
+            'text' => 'Lista Pedidos',
+            'url'  => '/all/orders',
+            'icon' => 'fas fa-fw fa-list', // Ícono de "Listar"
+        ],
+    ],
+],
+
 
 
         
@@ -377,8 +408,8 @@ return [
         //     'icon_color' => 'cyan',
         //     'url'        => '#',
         // ],
+    
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Menu Filters

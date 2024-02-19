@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OrderController;
 
 use App\Livewire\AddressForm;
 /*
@@ -111,7 +112,27 @@ Route::resource('addresses', AddressController::class);
 });
 
 
-
+//CONTACT
 Route::get('/contact', [ContactController::class, 'showform'])->name('contact');
 Route::post('/contact/submit', [ContactController::class, 'submitform'])->name('contact.submit');
 Route::get('/contact/success', [ContactController::class, 'successview'])->name('contact.success');
+
+
+//show contact messages to admin
+Route::middleware(['auth', 'admin'])->group(function () {
+Route::get('/messages', [ContactController::class, 'index'])->name('contact.index');
+Route::get('/message/detail/{id}', [ContactController::class, 'show'])->name('contact.show');
+});
+
+
+//make an order
+Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+
+
+
+//orders from users
+Route::get('/confirmation/{order}', [OrderController::class,'orderconfirmation'] )->name('order.confirmation');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/all/orders', [OrderController::class,'allorders'] )->name('orders.all');
+});

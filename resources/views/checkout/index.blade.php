@@ -97,6 +97,9 @@ module.exports = {
         </div>
     </div>
 
+    <form method="post" action="{{ route('checkout.placeOrder') }}">
+        @csrf
+
     <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
         {{-- Filas de productos a la izquierda --}}
         <div class="w-full md:flex items-start">
@@ -189,22 +192,26 @@ module.exports = {
                         </div>
 
                         @endforeach
+    
+
                         <div class="w-full flex items-center">
                             <div class="w-32">
                                 <span class="text-gray-600 font-semibold">Direccion</span>
                             </div>
                             <div class="flex-grow pl-3">
-                               <select name="address" id="" class="mt-1 p-2 w-full border rounded-md">
-                                @foreach ($address as $d)
-                                <option value="{{$d->id}}">{{$d->department}},{{$d->city}},{{$d->neighborhood}}</option>
-                                @endforeach
-                               </select>
+                                <select name="address" id="" class="mt-1 p-2 w-full border rounded-md">
+                                    @foreach ($address as $d)
+                                        <option value="{{ $d->id }}">{{ $d->department }}, {{ $d->city }}, {{ $d->neighborhood }}</option>
+                                    @endforeach
+                                </select>
+                                
                             </div>
                         </div>
-                    </div>
+                        
+
                  
 
-                    <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
+                    {{-- <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
                         <div class="w-full p-3 border-b border-gray-200">
                             <div class="mb-5">
                                 <label for="type1" class="flex items-center cursor-pointer">
@@ -275,8 +282,8 @@ module.exports = {
                             </label>
                         </div>
                     </div>
-                    <div>
-                        <button class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold"><i class="mdi mdi-lock-outline mr-1"></i> PAY NOW</button>
+                    <div> --}}
+                        <button type="submit" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold"><i class="mdi mdi-lock-outline mr-1"></i>Realizar Pedido</button>
                     </div>
                 </div>
             </div>

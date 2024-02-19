@@ -64,7 +64,8 @@ public function index()
         ->select([
             'carts.id',
             'products.name',
-            'products.price',
+             // Selecciona el precio con descuento si el descuento es mayor a 0, de lo contrario, selecciona el precio original
+             \DB::raw('CASE WHEN products.discount > 0 THEN products.price - (products.price * (products.discount / 100)) ELSE products.price END as price'),
             'carts.quantity',
             'products.image'
         ])
