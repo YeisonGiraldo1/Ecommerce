@@ -27,9 +27,9 @@
       <td>{{$order->address_id}}</td>
       <td>{{$order->total}}</td>
       <td>{{$order->status}}</td>
-      <td>   <button class="btn btn-info btn-sm">
+      <td>  <a href="/detail/order/{{$order->id}}"><button class="btn btn-info btn-sm">
         Ver Detalle <i class="fas fa-info-circle"></i>
-    </button></td>
+    </button></a> </td>
       <td></td>
     
      

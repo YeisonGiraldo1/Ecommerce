@@ -1,7 +1,7 @@
 <x-app-layout>
 
         <div class="container mx-auto mt-10 max-w-2xl pb-20"> <!-- Cambié 'max-w-2xl' para limitar el ancho del contenedor -->
-        <div class="bg-white p-8 rounded-lg shadow-md">
+        <div class="bg-white p-8 rounded-lg shadow-xl">
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-semibold text-gray-800">¡Pedido Confirmado!</h1>
                 <p class="text-gray-600">Gracias por tu compra.</p>
@@ -41,4 +41,5 @@
             </div>
         </div>
     </div>
+    <br><br>
 </x-app-layout>

@@ -34,11 +34,50 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'brand' => 'required|string|max:255',
+        'status' => 'required|in:activo,inactivo',
+        'color' => 'nullable|string|max:50',
+        'discount' => 'nullable|numeric|min:0|max:100',
+        'stock' => 'required|integer|min:0',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'category_id' => 'required|exists:categories,id',
+    ],[
+        'name.required' => 'El campo nombre es obligatorio.',
+        'description.required' => 'El campo descripción es obligatorio.',
+        'price.required' => 'El campo precio es obligatorio.',
+        'brand.required' => 'El campo marca es obligatorio.',
+        'status.required' => 'El campo estado es obligatorio.',
+        'color.max' => 'El campo color no debe tener más de :max caracteres.',
+        'discount.numeric' => 'El campo descuento debe ser un número.',
+        'discount.min' => 'El campo descuento debe ser como mínimo :min.',
+        'discount.max' => 'El campo descuento no debe ser mayor que :max.',
+        'stock.required' => 'El campo stock es obligatorio.',
+        'stock.integer' => 'El campo stock debe ser un número entero.',
+        'category_id.required' => 'El campo categoría es obligatorio.',
+        'category_id.exists' => 'La categoría seleccionada no es válida.',
+        'image.required' => 'El campo imagen es obligatorio.',
+        'image.image' => 'El archivo seleccionado debe ser una imagen.',
+        'image.mimes' => 'El archivo seleccionado debe ser de tipo: jpeg, png, jpg o gif.',
+        'image.max' => 'El tamaño máximo de la imagen es :max kilobytes.',
+    ]);
+
+
+
+
+
+
+
+
         $fileName = $request->file('image')->getClientOriginalName(); // Obtener el nombre original del archivo
         $request->file('image')->move(public_path('images_products'), $fileName);
     
         // Crear un nuevo producto con los datos del formulario
-        $product = new Product;
+          $product = new Product($validatedData);
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
@@ -81,6 +120,46 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+
+              // Validar los datos del formulario
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'price' => 'required|numeric',
+        'brand' => 'required|string|max:255',
+        'status' => 'required|in:activo,inactivo',
+        'color' => 'nullable|string|max:50',
+        'discount' => 'nullable|numeric|min:0|max:100',
+        'stock' => 'required|integer|min:0',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'category_id' => 'required|exists:categories,id',
+    ],[
+        'name.required' => 'El campo nombre es obligatorio.',
+        'description.required' => 'El campo descripción es obligatorio.',
+        'price.required' => 'El campo precio es obligatorio.',
+        'brand.required' => 'El campo marca es obligatorio.',
+        'status.required' => 'El campo estado es obligatorio.',
+        'color.max' => 'El campo color no debe tener más de :max caracteres.',
+        'discount.numeric' => 'El campo descuento debe ser un número.',
+        'discount.min' => 'El campo descuento debe ser como mínimo :min.',
+        'discount.max' => 'El campo descuento no debe ser mayor que :max.',
+        'stock.required' => 'El campo stock es obligatorio.',
+        'stock.integer' => 'El campo stock debe ser un número entero.',
+        'category_id.required' => 'El campo categoría es obligatorio.',
+        'category_id.exists' => 'La categoría seleccionada no es válida.',
+        'image.required' => 'El campo imagen es obligatorio.',
+        'image.image' => 'El archivo seleccionado debe ser una imagen.',
+        'image.mimes' => 'El archivo seleccionado debe ser de tipo: jpeg, png, jpg o gif.',
+        'image.max' => 'El tamaño máximo de la imagen es :max kilobytes.',
+    ]);
+
+
+
+
+
+
+
         $product = Product::find($id);
 
         $product->name = $request->input('name');

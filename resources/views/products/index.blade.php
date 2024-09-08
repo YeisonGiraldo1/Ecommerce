@@ -4,6 +4,8 @@
 
 
 
+<!-- SweetAlert CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
@@ -46,14 +48,16 @@
    
       <td>
       
-        <a href="/products/{{$p->id}}/edit"><div class="btn btn-outline-primary">Actualizar</div></a>
 
-        <form action="{{ route('products.destroy', $p->id) }}" method="POST">
+        <div class="d-flex">
+        <a href="/products/{{$p->id}}/edit"><div class="btn btn-warning btn-sm mr-2"><i class="fas fa-fw fa-edit"></i></div></a>
+
+        <form  id="delete-form-{{$p->id}}" action="{{ route('products.destroy', $p->id) }}" method="POST">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-outline-danger btn-lg">Eliminar</button>
+          <button type="submit" onclick="confirmDelete({{$p->id}})" class="btn btn-danger btn-sm"><i class="fas fa-fw fa-trash"></i></button>
       </form>
-  
+    </div>
      
       </td>
      
@@ -79,3 +83,21 @@
 
 
 @endsection
+
+<script>
+  function confirmDelete(productId) {
+      Swal.fire({
+          title: "¿Estás seguro?",
+          text: "¡No podrás revertir esto!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sí, eliminarlo"
+      }).then((result) => {
+          if (result.isConfirmed) {
+              document.getElementById('delete-form-' + productId).submit();
+          }
+      });
+  }
+</script>

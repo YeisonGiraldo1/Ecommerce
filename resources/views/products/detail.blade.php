@@ -63,7 +63,11 @@
 
     <div class="py-4 border-b border-gray-200 flex items-center justify-between">
         <p class="text-base leading-4 text-gray-800 dark:text-black-300">Stock</p>
+        @if($productdetail->stock <= 0)
+        <p class="text-lg font-bold text-red-500">no hay unidades disponibles</p>
+        @else
         <p class="text-lg font-bold text-green-500">{{$productdetail->stock}} unidades disponibles</p>
+        @endif
       </div>
 
 

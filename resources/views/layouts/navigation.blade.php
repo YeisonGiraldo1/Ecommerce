@@ -38,6 +38,10 @@
             <nav>
                 <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
                     <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="/">Home</a></li>
+                    @foreach($categories as $c)
+                    <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="{{ url('/products/category/'.$c->id) }}">{{$c->name}}</a></li>
+    
+                    @endforeach
                     <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="{{route('contact')}}">Contacto</a></li>
                 </ul>
             </nav>
@@ -77,6 +81,7 @@
                     <ul class="absolute hidden text-gray-700 pt-1 group-hover:block right-0 mt-2 bg-white border rounded-md">
                         <li><a class="inline-block no-underline py-2 px-4 w-full" href="{{ route('profile.edit') }}">Perfil</a></li>
                         <li><a class="inline-block no-underline py-2 px-4 w-full" href="{{ route('addresses.index') }}">Mis Direcciones</a></li>
+                        <li><a class="inline-block no-underline py-2 px-4 w-full" href="{{route('order.user')}}">Mis Pedidos</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf

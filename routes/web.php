@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -125,14 +126,35 @@ Route::get('/message/detail/{id}', [ContactController::class, 'show'])->name('co
 });
 
 
+//ORDERS USERS
+Route::middleware('auth')->group(function () {
 //make an order
-Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+Route::get('/checkout/place-order', [CheckoutController::class, 'placeorder'])->name('checkout.placeorder');
 
-
-
-//orders from users
+//user order confirmation
 Route::get('/confirmation/{order}', [OrderController::class,'orderconfirmation'] )->name('order.confirmation');
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/all/orders', [OrderController::class,'allorders'] )->name('orders.all');
+//shows a user's orders
+Route::get('/myorders', [OrderController::class,'userorders'] )->name('order.user');
+
+//user order detail
+Route::get('/order/{orderId}', [OrderController::class, 'userorderdetail'])->name('order.user.detail');
 });
+
+
+
+//ORDERS ADMIN
+Route::middleware(['auth', 'admin'])->group(function () {
+//show all orders to admin
+Route::get('/all/orders', [OrderController::class,'allorders'] )->name('orders.all');
+    
+//order detail
+Route::get('/detail/order/{order}', [OrderController::class,'orderdetail'] )->name('order.detail');
+});
+
+
+
+Route::get('/products/category/{category}', [CategoryController::class, 'showproducts'])->name('show.products');
+
+
+Route::get('/all/users', [UserController::class, 'allusers'])->name('users.all');

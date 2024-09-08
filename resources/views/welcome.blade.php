@@ -13,6 +13,8 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbs5uP9Du7UUGjQ1SZzQ3PJZG2KfOnQjk/Pn5c9eb4lAI5F6Hq7fmjsl5F9Gq1dz" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-hMA4qf7MTZZqlv8YM0N8X4sHZvG9+NO6N4TDxvEqGB0gDhUxO89Gg1+w4QfnWbLg2BW+fP4f/qA7Yx2RG3zg/g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    </head>
         <!-- Styles -->
         <style>
         .work-sans {
@@ -192,7 +194,7 @@ Alternatively if you want to just have a single hero
             <div class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
                 <a href="{{ route('detailproduct', ['id' => $product->id]) }}">
                     <div class="relative">
-                        <img class="hover:grow hover:shadow-lg object-cover object-center rounded-md" style="max-height: 275px;" src="{{ asset('images_products/' . $product->image) }}" alt="{{ $product->name }}">
+                        <img class="hover:grow hover:shadow-lg object-cover object-center rounded-md" style="height: 350px;width: 350px;" src="{{ asset('images_products/' . $product->image) }}" alt="{{ $product->name }}">
                         @if($product->stock > 0)
                         <div class="absolute top-0 left-0 p-2">
                             <span class="bg-blue-500 text-white py-1 px-2 rounded-md">{{ $product->category->name }}</span>
@@ -218,8 +220,9 @@ Alternatively if you want to just have a single hero
                     @endif
                 </a>
         
-                @if(auth()->check() && $product->stock > 0)
-                    <form method="POST" action="{{ route('cart.add', ['id' => $product->id, 'user_id' => auth()->user()->id]) }}">
+                @if(auth()->check() && $product->stock > 0)     
+                <form method="POST" action="{{ route('cart.add', ['id' => $product->id, 'user_id' => auth()->user()->id]) }}">
+               
                         @csrf
                         <div class="flex items-center justify-between pt-4">
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
@@ -234,10 +237,88 @@ Alternatively if you want to just have a single hero
                 @endif
             </div>
         @endforeach
+
+    </section>
+   
+
+{{-- 
+    <section id="categories" class="bg-gray-100 py-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Todas las Categorías</h2>
+            
+            <div class="flex flex-wrap justify-center">
+                <!-- Ejemplo de categoría con imagen circular y enlace -->
+                @foreach ($categories as $category)
+                    <a href="" class="mx-4 mb-4 group">
+                        <div class="relative">
+                            <img src="{{ asset('images_categories/' . $category->image) }}" alt="{{ $category->name }}" class="w-16 h-16 object-cover rounded-full transition duration-300 transform group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-50 transition duration-300 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">{{ $category->name }}</span>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section> --}}
+
+
+    <!-- component -->
+    <div class="flex justify-center items-center bg-white pl-10 pr-10">
+        <div class="2xl:mx-auto 2xl:container py-12 px-4 sm:px-6 xl:px-20 2xl:px-0 w-full">
+            <div class="flex flex-col jusitfy-center items-center space-y-10">
+                <div class="flex flex-col justify-center items-center">
+                    <h1 class="text-3xl xl:text-4xl font-semibold leading-7 xl:leading-9 text-gray-800 dark:text-white">Categorias</h1>
+                </div>
+    
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-x-4 md:gap-y-8 w-full">
+                    @foreach ($categories as $category)
+                        <div class="relative group flex justify-center items-center h-full">
+                            <img class="object-center object-cover h-full w-full" src="{{ asset('images_categories/' . $category->image) }}" alt="category-image" />
+                            <a href="{{ url('/products/category/'.$category->id) }}" class="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white text-center">
+                                {{ $category->name }}
+                            </a>
+                            <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
+                        </div>
+                    @endforeach
+                </div>
+                
+<!--     
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-x-4 gap-y-8 w-full">
+                    <div class="relative group flex justify-center items-center h-full">
+                        <img class="object-center object-cover h-full w-full" src="https://i.ibb.co/SXZvYHs/irene-kredenets-DDqx-X0-7v-KE-unsplash-1.png" alt="shoe-image" />
+                        <button class="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Shoes</button>
+                        <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
+                    </div>
+    
+                    <div class="relative group flex justify-center items-center h-full">
+                        <img class="object-center object-cover h-full w-full" src="https://i.ibb.co/Hd1pVxW/louis-mornaud-Ju-6-TPKXd-Bs-unsplash-1-2.png" alt="watch-image" />
+                        <button class="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Watches</button>
+                        <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
+                    </div>
+
+
+                    <div class="relative group flex justify-center items-center h-full">
+                        <img class="object-center object-cover h-full w-full" src="https://i.ibb.co/Hd1pVxW/louis-mornaud-Ju-6-TPKXd-Bs-unsplash-1-2.png" alt="watch-image" />
+                        <button class="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Watches</button>
+                        <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
+                    </div>
+
+                    <div class="relative group flex justify-center items-center h-full">
+                        <img class="object-center object-cover h-full w-full" src="https://i.ibb.co/Hd1pVxW/louis-mornaud-Ju-6-TPKXd-Bs-unsplash-1-2.png" alt="watch-image" />
+                        <button class="dark:bg-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 bottom-4 z-10 absolute text-base font-medium leading-none text-gray-800 py-3 w-36 bg-white">Watches</button>
+                        <div class="absolute opacity-0 group-hover:opacity-100 transition duration-500 bottom-3 py-6 z-0 px-20 w-36 bg-white bg-opacity-50"></div>
+                    </div>
+                     -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
         
 
-
-
+    
 
     </section>
 
@@ -257,7 +338,6 @@ Alternatively if you want to just have a single hero
 
         </div>
 
-    </section>
 
 <footer class="container mx-auto bg-white py-8 border-t border-gray-400">
   <div class="container flex px-3 py-8 ">

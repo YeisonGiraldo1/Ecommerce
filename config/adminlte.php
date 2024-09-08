@@ -389,6 +389,21 @@ return [
 ],
 
 
+[
+    'text'    => 'Usuarios',
+    'icon'    => 'fas fa-fw fa-users',
+    'submenu' => [
+
+        [
+            'text' => 'Usuarios registrados',
+            'url'  => '/all/users',
+            'icon' => 'fas fa-fw fa-list', // Ícono de "Listar"
+        ],
+    ],
+],
+
+
+
 
         
         

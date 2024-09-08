@@ -24,4 +24,11 @@ class Category extends Model
     ];
 
     public $timestamps = true;
+
+
+
+    public function productos()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

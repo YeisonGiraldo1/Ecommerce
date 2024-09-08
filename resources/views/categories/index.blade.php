@@ -33,16 +33,15 @@
      
    
       <td>
-      
-        <a href="/categories/{{$c->id}}/edit"><div class="btn btn-outline-primary">Actualizar</div></a>
+        <div class="d-flex ; d-20">
+        <a href="/categories/{{$c->id}}/edit"><div class="btn btn-warning btn-sm mr-2"><i class="fas fa-fw fa-edit"></i></div></a>
 
         <form action="{{ route('categories.destroy', $c->id) }}" method="POST">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-outline-danger btn-lg">Eliminar</button>
+          <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-fw fa-trash"></i></button>
       </form>
-  
-     
+    </div>
       </td>
      
 

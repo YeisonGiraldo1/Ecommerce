@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
@@ -108,6 +109,19 @@ class CategoryController extends Controller
         ->with('success', 'Post deleted successfully');
     }
 
+
+
+
+    //MOSTRAR PRODUCTOS DE LA CATEGORIA SELECCIONADA
+
+    public function showproducts(Category $category)
+    {
+        $products = Product::where('category_id', $category->id)->get();
+
+        $productsquantity = Product::where('category_id', $category->id)->count();
+        return view('categories.showproducts', compact('products', 'category','productsquantity'));
+
+    }
 
 
     }

@@ -89,6 +89,11 @@ module.exports = {
 
 
 </style>
+<script type=«text/javascript» src=»https://checkout.epayco.co/checkout.js»>
+</script>
+
+
+
 
 <div class="min-w-screen min-h-screen bg-gray-50 py-5">
     <div class="px-5"> 
@@ -97,7 +102,7 @@ module.exports = {
         </div>
     </div>
 
-    <form method="post" action="{{ route('checkout.placeOrder') }}">
+    <form method="get" action="{{ route('checkout.placeorder') }}" id="checkoutForm">
         @csrf
 
     <div class="w-full bg-white border-t border-b border-gray-200 px-5 py-10 text-gray-800">
@@ -160,7 +165,7 @@ module.exports = {
                                 <span class="text-gray-600">Total</span>
                             </div>
                             <div class="pl-3">
-                                <span class="font-semibold text-gray-400 text-sm">COP</span> <span class="font-semibold">{{$total}}</span>
+                                <span class="font-semibold text-gray-400 text-sm">COP</span> <span id="totalAmount" class="font-semibold">{{$total}}</span>
                             </div>
                         </div>
                     </div>
@@ -194,22 +199,28 @@ module.exports = {
                         @endforeach
     
 
+                  
                         <div class="w-full flex items-center">
                             <div class="w-32">
-                                <span class="text-gray-600 font-semibold">Direccion</span>
+                                <label for="addressSelect" class="text-gray-600 font-semibold">Direccion</label>
                             </div>
                             <div class="flex-grow pl-3">
-                                <select name="address" id="" class="mt-1 p-2 w-full border rounded-md">
+                                <select name="address_id" id="addressSelect" class="mt-1 p-2 w-full border rounded-md">
+                                    <option value="" disabled selected>Selecciona una dirección</option>
                                     @foreach ($address as $d)
                                         <option value="{{ $d->id }}">{{ $d->department }}, {{ $d->city }}, {{ $d->neighborhood }}</option>
                                     @endforeach
                                 </select>
-                                
                             </div>
                         </div>
                         
+                        <!-- Campo oculto para almacenar la dirección seleccionada -->
+                        <input type="hidden" name="selected_address" id="selectedAddressInput" value="">
 
-                 
+
+
+ 
+                        
 
                     {{-- <div class="w-full mx-auto rounded-lg bg-white border border-gray-200 text-gray-800 font-light mb-6">
                         <div class="w-full p-3 border-b border-gray-200">
@@ -280,15 +291,57 @@ module.exports = {
                                 <input type="radio" class="form-radio h-5 w-5 text-indigo-500" name="type" id="type2">
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" width="80" class="ml-3"/>
                             </label>
-                        </div>
+                        </div> --}}
                     </div>
-                    <div> --}}
-                        <button type="submit" class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold"><i class="mdi mdi-lock-outline mr-1"></i>Realizar Pedido</button>
+                    <div> 
+                       
+            <div>
+              
+            
+                <button type="submit" class="hidden" id="epaycoButton"></button>
+                <script src='https://checkout.epayco.co/checkout.js'
+                data-epayco-key='371d1c837ee4af646aef9143b18d4a2e' 
+                class='epayco-button'
+                data-epayco-amount='{{$total}}'
+                data-epayco-tax='0.00'  
+                data-epayco-tax-ico='0.00'               
+                data-epayco-tax-base='{{$total}}'
+                data-epayco-name='pedido' 
+                data-epayco-description='pedido' 
+                data-epayco-currency='cop'    
+                data-epayco-country='CO' 
+                data-epayco-test='true' 
+                data-epayco-external='false' 
+                data-epayco-response='{{ route("checkout.placeorder") }}'
+                data-epayco-confirmation='' 
+                data-epayco-button='https://multimedia.epayco.co/dashboard/btns/btn11.png'
+                onclick="handleEpaycoButtonClick()">
+            </script>
+            
+            <script>
+                function handleEpaycoButtonClick() {
+                    // Captura la dirección seleccionada
+                    var selectedAddress = document.getElementById('addressSelect').value;
+            
+                    // Asigna la dirección al campo oculto del formulario
+                    document.getElementById('selectedAddressInput').value = selectedAddress;
+            
+                    // Simula el clic en el botón de envío del formulario
+                    document.getElementById('epaycoButton').click();
+                }
+            </script>
+            
+            
+
+            
+            </div>
+       
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </form>
     <div class="p-5">
         <div class="text-center text-gray-400 text-sm">
             <a href="https://www.buymeacoffee.com/scottwindon" target="_blank" class="focus:outline-none underline text-gray-400"><i class="mdi mdi-beer-outline"></i>Buy me a beer</a> and help support open-resource
@@ -306,3 +359,20 @@ module.exports = {
 </div>
 </x-app-layout>
 
+<input type="hidden" name="total_amount" id="hiddenTotalAmount" value="{{$total}}">
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkoutForm = document.getElementById('checkoutForm');
+        var customSubmitButton = document.getElementById('customSubmitButton');
+        var epaycoButton = document.getElementById('epaycoButton');
+
+        customSubmitButton.addEventListener('click', function () {
+            // Realizar acciones adicionales necesarias antes del pago (si es necesario)
+            
+            // Simular clic en el botón de ePayco
+            epaycoButton.click();
+        });
+    });
+</script>
